@@ -258,7 +258,7 @@ This model is closer to real-world launches, like a drone dropped from a height 
 
 In realistic scenarios, **air resistance** affects motion significantly, especially at high speeds.
 
-![alt text](image-7.png)
+![alt text](image-8.png)
 
 ```python
 import matplotlib.pyplot as plt
@@ -272,10 +272,17 @@ theta = np.radians(angle)
 
 # Time array for motion without resistance
 t = np.linspace(0, 10, 500)
+x_no_res = []
+y_no_res = []
 
-# Without air resistance
-x_no_res = v0 * np.cos(theta) * t
-y_no_res = v0 * np.sin(theta) * t - 0.5 * g * t**2
+# Compute motion without air resistance and stop when y < 0
+for ti in t:
+    x = v0 * np.cos(theta) * ti
+    y = v0 * np.sin(theta) * ti - 0.5 * g * ti**2
+    if y < 0:
+        break
+    x_no_res.append(x)
+    y_no_res.append(y)
 
 # With air resistance (simple linear model)
 k = 0.1  # air resistance coefficient
@@ -312,7 +319,8 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
-[link](https://colab.research.google.com/drive/1IpND8-aKHZaSC7QW-mcg9KnHaHbJCGfp?usp=sharing)
+
+[link](https://colab.research.google.com/drive/1CHVYHJHWLrtIyA_wowBXSOoom8gyDYEW?usp=sharing)
 
 ### 3.2.1 Drag Force Model
 
