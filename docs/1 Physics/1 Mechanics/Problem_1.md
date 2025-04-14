@@ -93,11 +93,13 @@ The **range** $R$ of a projectile is the horizontal distance it travels before r
 
 We start from the horizontal and vertical motion equations:
 
-- Horizontal displacement:  
-  $$x(t)=v_0\cos\theta\cdot t$$
+- Horizontal displacement: 
 
-- Vertical displacement:  
-  $$y(t)=v_0\sin\theta\cdot t-\frac{1}{2}gt^2$$
+$$x(t)=v_0\cos\theta\cdot t$$
+
+- Vertical displacement:
+ 
+$$y(t)=v_0\sin\theta\cdot t-\frac{1}{2}gt^2$$
 
 Assuming the projectile lands at the same height it was launched ($y=0$), solve for **time of flight** $T$:
 
@@ -333,7 +335,6 @@ Despite its limitations, understanding the ideal case is essential before progre
 ![alt text](image-1.png)
 
 ```python
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -388,7 +389,6 @@ plot_range_vs_angle(v0_values)
 # Simulate and plot range vs initial velocity for a fixed angle
 v0_values = np.linspace(1, 100, 100)
 plot_range_vs_velocity(angle, v0_values)
- 
- ```
+```
 
  [link](https://colab.research.google.com/drive/1jJQWOSS3asN_5gQ4fpXQSKvUv_tuAQkL?usp=sharing)
