@@ -359,7 +359,7 @@ R=v_0\cos\theta\cdot T
 <hr/>
 <h2 id="32-air-resistance-and-drag">3.2 Air Resistance and Drag</h2>
 <p>In realistic scenarios, <strong>air resistance</strong> affects motion significantly, especially at high speeds.</p>
-<p><img alt="alt text" src="../image-7.png"/></p>
+<p><img alt="alt text" src="../image-8.png"/></p>
 <pre><code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
 
@@ -371,10 +371,17 @@ theta = np.radians(angle)
 
 # Time array for motion without resistance
 t = np.linspace(0, 10, 500)
+x_no_res = []
+y_no_res = []
 
-# Without air resistance
-x_no_res = v0 * np.cos(theta) * t
-y_no_res = v0 * np.sin(theta) * t - 0.5 * g * t**2
+# Compute motion without air resistance and stop when y &lt; 0
+for ti in t:
+    x = v0 * np.cos(theta) * ti
+    y = v0 * np.sin(theta) * ti - 0.5 * g * ti**2
+    if y &lt; 0:
+        break
+    x_no_res.append(x)
+    y_no_res.append(y)
 
 # With air resistance (simple linear model)
 k = 0.1  # air resistance coefficient
@@ -411,7 +418,7 @@ plt.legend()
 plt.grid(True)
 plt.show()
 </code></pre>
-<p><a href="https://colab.research.google.com/drive/1IpND8-aKHZaSC7QW-mcg9KnHaHbJCGfp?usp=sharing">link</a></p>
+<p><a href="https://colab.research.google.com/drive/1CHVYHJHWLrtIyA_wowBXSOoom8gyDYEW?usp=sharing">link</a></p>
 <h3 id="321-drag-force-model">3.2.1 Drag Force Model</h3>
 <p>A basic drag model (linear with velocity):</p>
 <div class="arithmatex">\[
