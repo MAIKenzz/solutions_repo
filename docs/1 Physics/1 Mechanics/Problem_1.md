@@ -330,10 +330,10 @@ Where:
 This leads to **nonlinear** differential equations:
 
 - Horizontal:  
-  $$m\frac{dv_x}{dt}=-kv_x$$
+$$m\frac{dv_x}{dt}=-kv_x$$
 
 - Vertical:  
-  $$m\frac{dv_y}{dt}=-mg-kv_y$$
+$$m\frac{dv_y}{dt}=-mg-kv_y$$
 
 Solving these yields **exponentially decaying velocities**:
 
