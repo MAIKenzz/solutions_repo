@@ -258,6 +258,61 @@ This model is closer to real-world launches, like a drone dropped from a height 
 
 In realistic scenarios, **air resistance** affects motion significantly, especially at high speeds.
 
+![alt text](image-7.png)
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Initial conditions
+v0 = 50  # initial velocity in m/s
+angle = 45  # launch angle in degrees
+g = 9.81  # gravity in m/s^2
+theta = np.radians(angle)
+
+# Time array for motion without resistance
+t = np.linspace(0, 10, 500)
+
+# Without air resistance
+x_no_res = v0 * np.cos(theta) * t
+y_no_res = v0 * np.sin(theta) * t - 0.5 * g * t**2
+
+# With air resistance (simple linear model)
+k = 0.1  # air resistance coefficient
+m = 1  # mass in kg
+vx = v0 * np.cos(theta)
+vy = v0 * np.sin(theta)
+
+x_res = [0]
+y_res = [0]
+dt = 0.02
+x, y = 0, 0
+
+# Numerical integration using Euler's method
+for _ in range(int(10/dt)):
+    ax = -k * vx / m
+    ay = -g - k * vy / m
+    vx += ax * dt
+    vy += ay * dt
+    x += vx * dt
+    y += vy * dt
+    if y < 0:
+        break
+    x_res.append(x)
+    y_res.append(y)
+
+# Plotting
+plt.figure(figsize=(10, 6))
+plt.plot(x_no_res, y_no_res, label='Without Air Resistance')
+plt.plot(x_res, y_res, label='With Air Resistance')
+plt.title('Projectile Motion: With and Without Air Resistance')
+plt.xlabel('Distance (m)')
+plt.ylabel('Height (m)')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
 ### 3.2.1 Drag Force Model
 
 A basic drag model (linear with velocity):
