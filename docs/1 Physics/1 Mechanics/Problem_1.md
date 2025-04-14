@@ -1,3 +1,5 @@
+# Problem 2
+
 # 1. Theoretical Foundation: Equations of Projectile Motion
 
 ## 1.1 Overview
@@ -389,3 +391,4 @@ plot_range_vs_velocity(angle, v0_values)
  ```
 
  [link](https://colab.research.google.com/drive/1jJQWOSS3asN_5gQ4fpXQSKvUv_tuAQkL?usp=sharing)
+ 
