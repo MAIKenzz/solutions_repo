@@ -312,6 +312,7 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
+[link](https://colab.research.google.com/drive/1IpND8-aKHZaSC7QW-mcg9KnHaHbJCGfp?usp=sharing)
 
 ### 3.2.1 Drag Force Model
 
