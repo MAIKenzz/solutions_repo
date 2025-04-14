@@ -225,15 +225,13 @@
 <p>The <strong>range</strong> <span class="arithmatex">\(R\)</span> of a projectile is the horizontal distance it travels before returning to the same vertical level from which it was launched.</p>
 <p>We start from the horizontal and vertical motion equations:</p>
 <ul>
-<li>
-<p>Horizontal displacement:<br/>
-<span class="arithmatex">\(<span class="arithmatex">\(x(t)=v_0\cos\theta\cdot t\)</span>\)</span></p>
-</li>
-<li>
-<p>Vertical displacement:<br/>
-<span class="arithmatex">\(<span class="arithmatex">\(y(t)=v_0\sin\theta\cdot t-\frac{1}{2}gt^2\)</span>\)</span></p>
-</li>
+<li>Horizontal displacement: </li>
 </ul>
+<div class="arithmatex">\[x(t)=v_0\cos\theta\cdot t\]</div>
+<ul>
+<li>Vertical displacement:</li>
+</ul>
+<div class="arithmatex">\[y(t)=v_0\sin\theta\cdot t-\frac{1}{2}gt^2\]</div>
 <p>Assuming the projectile lands at the same height it was launched (<span class="arithmatex">\(y=0\)</span>), solve for <strong>time of flight</strong> <span class="arithmatex">\(T\)</span>:</p>
 <div class="arithmatex">\[
 0=v_0\sin\theta\cdot T-\frac{1}{2}gT^2 \\
@@ -443,55 +441,61 @@ v_x(t)=v_{0x}e^{-kt/m},\quad v_y(t)=\left(v_{0y}+\frac{mg}{k}\right)e^{-kt/m}-\f
 <h2 id="phyton-plot">Phyton-plot</h2>
 <p><img alt="alt text" src="../image.png"/></p>
 <p><img alt="alt text" src="../image-1.png"/></p>
-<p>```python</p>
-<p>import numpy as np
-import matplotlib.pyplot as plt</p>
-<h1 id="constants">Constants</h1>
-<p>g = 9.81  # Gravitational acceleration in m/s^2</p>
-<h1 id="function-to-calculate-the-range-of-a-projectile">Function to calculate the range of a projectile</h1>
-<p>def calculate_range(v0, angle_deg, g=g):
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+g = 9.81  # Gravitational acceleration in m/s^2
+
+# Function to calculate the range of a projectile
+def calculate_range(v0, angle_deg, g=g):
     angle_rad = np.radians(angle_deg)
     range_ = (v0**2 * np.sin(2 * angle_rad)) / g
-    return range_</p>
-<h1 id="function-to-plot-range-vs-angle-for-different-velocities">Function to plot range vs angle for different velocities</h1>
-<p>def plot_range_vs_angle(v0_values, g=g):
+    return range_
+
+# Function to plot range vs angle for different velocities
+def plot_range_vs_angle(v0_values, g=g):
     angles = np.linspace(0, 90, 500)  # Angles from 0 to 90 degrees
-    plt.figure(figsize=(10, 6))</p>
-<pre><code>for v0 in v0_values:
-    ranges = [calculate_range(v0, angle, g) for angle in angles]
-    plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+    plt.figure(figsize=(10, 6))
 
-plt.title('Range vs Angle for Different Initial Velocities')
-plt.xlabel('Angle (degrees)')
-plt.ylabel('Range (meters)')
-plt.legend(title="Initial Velocity (m/s)")
-plt.grid(True)
-plt.show()
-</code></pre>
-<h1 id="function-to-plot-range-vs-velocity-for-different-angles">Function to plot range vs velocity for different angles</h1>
-<p>def plot_range_vs_velocity(angle_deg, v0_values, g=g):
-    plt.figure(figsize=(10, 6))</p>
-<pre><code>ranges = [calculate_range(v0, angle_deg, g) for v0 in v0_values]
-plt.plot(v0_values, ranges, label=f'Angle = {angle_deg} degrees')
+    for v0 in v0_values:
+        ranges = [calculate_range(v0, angle, g) for angle in angles]
+        plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
 
-plt.title('Range vs Initial Velocity for a Fixed Angle')
-plt.xlabel('Initial Velocity (m/s)')
-plt.ylabel('Range (meters)')
-plt.legend(title="Launch Angle (degrees)")
-plt.grid(True)
-plt.show()
-</code></pre>
-<h1 id="user-input-for-initial-conditions">User input for initial conditions</h1>
-<p>v0 = float(input("Enter initial velocity (m/s): "))
+    plt.title('Range vs Angle for Different Initial Velocities')
+    plt.xlabel('Angle (degrees)')
+    plt.ylabel('Range (meters)')
+    plt.legend(title="Initial Velocity (m/s)")
+    plt.grid(True)
+    plt.show()
+
+# Function to plot range vs velocity for different angles
+def plot_range_vs_velocity(angle_deg, v0_values, g=g):
+    plt.figure(figsize=(10, 6))
+
+    ranges = [calculate_range(v0, angle_deg, g) for v0 in v0_values]
+    plt.plot(v0_values, ranges, label=f'Angle = {angle_deg} degrees')
+
+    plt.title('Range vs Initial Velocity for a Fixed Angle')
+    plt.xlabel('Initial Velocity (m/s)')
+    plt.ylabel('Range (meters)')
+    plt.legend(title="Launch Angle (degrees)")
+    plt.grid(True)
+    plt.show()
+
+# User input for initial conditions
+v0 = float(input("Enter initial velocity (m/s): "))
 angle = float(input("Enter launch angle (degrees): "))
-g = float(input("Enter gravitational acceleration (m/s^2, default 9.81): ") or 9.81)</p>
-<h1 id="simulate-and-plot-range-vs-angle-for-different-initial-velocities">Simulate and plot range vs angle for different initial velocities</h1>
-<p>v0_values = [10, 20, 30, 40, 50]  # Different velocities for comparison
-plot_range_vs_angle(v0_values)</p>
-<h1 id="simulate-and-plot-range-vs-initial-velocity-for-a-fixed-angle">Simulate and plot range vs initial velocity for a fixed angle</h1>
-<p>v0_values = np.linspace(1, 100, 100)
-plot_range_vs_velocity(angle, v0_values)</p>
-<p>```</p>
+g = float(input("Enter gravitational acceleration (m/s^2, default 9.81): ") or 9.81)
+
+# Simulate and plot range vs angle for different initial velocities
+v0_values = [10, 20, 30, 40, 50]  # Different velocities for comparison
+plot_range_vs_angle(v0_values)
+
+# Simulate and plot range vs initial velocity for a fixed angle
+v0_values = np.linspace(1, 100, 100)
+plot_range_vs_velocity(angle, v0_values)
+</code></pre>
 <p><a href="https://colab.research.google.com/drive/1jJQWOSS3asN_5gQ4fpXQSKvUv_tuAQkL?usp=sharing">link</a></p>
 </div>
 </div><footer>
