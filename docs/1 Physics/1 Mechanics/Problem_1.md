@@ -60,6 +60,7 @@ $$y(t)=v_0\sin\theta\cdot t - \frac{1}{2}gt^2$$
 The full motion is described by:
 
 $$x(t)=v_0\cos\theta\cdot t$$  
+
 $$y(t)=v_0\sin\theta\cdot t - \frac{1}{2}gt^2$$
 
 These form a **parabolic trajectory** when $y$ is expressed in terms of $x$.
