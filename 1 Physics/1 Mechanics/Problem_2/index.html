@@ -678,6 +678,91 @@ t_n = nT, \quad T = \frac{2\pi}{\omega_{\text{drive}}}, \quad n \in \mathbb{N}
 <p><img alt="alt text" src="../image-3.png"/>
 <img alt="alt text" src="../image-4.png"/></p>
 <p><a href="https://colab.research.google.com/drive/1_LjPBADRivat7K0eXJuBNW1gO2pkeqyJ?usp=sharing">link</a></p>
+<h3 id="pendulum-simulation-summary">Pendulum Simulation Summary:</h3>
+<p>The pendulum is modeled by the nonlinear ODE:</p>
+<div class="arithmatex">\[
+\ddot{\theta} + b \dot{\theta} + \frac{g}{L} \sin(\theta) = A \cos(\omega t)
+\]</div>
+<p>where:
+- <span class="arithmatex">\(\\theta\)</span> = angle (rad)
+- <span class="arithmatex">\(\\dot{\\theta}\)</span> = angular velocity (rad/s)
+- <span class="arithmatex">\(b\)</span> = damping coefficient
+- <span class="arithmatex">\(g = 9.81\\, m/s^2\)</span> (gravity)
+- <span class="arithmatex">\(L = 1.0\\, m\)</span> (pendulum length)
+- <span class="arithmatex">\(A\)</span> = forcing amplitude
+- <span class="arithmatex">\(\\omega\)</span> = forcing frequency</p>
+<p>Scenarios simulated:
+1. Pure pendulum: <span class="arithmatex">\(b=0\)</span>, <span class="arithmatex">\(A=0\)</span>
+2. Damped pendulum: <span class="arithmatex">\(b \\approx 0.37\)</span>, <span class="arithmatex">\(A=0\)</span>
+3. Forced pendulum: <span class="arithmatex">\(b=0\)</span>, <span class="arithmatex">\(A \\approx 1.75\)</span>, <span class="arithmatex">\(\\omega \\approx 2.75\)</span></p>
+<p>Initial conditions:
+- <span class="arithmatex">\(\\theta(0) = 0.5\)</span> rad
+- <span class="arithmatex">\(\\dot{\\theta}(0) = 0\)</span></p>
+<p>Time span: 0 to 30 seconds.</p>
+<p>Outputs:
+- Plot of <span class="arithmatex">\(\\theta(t)\)</span> vs time
+- Phase diagram: <span class="arithmatex">\(\\theta\)</span> vs <span class="arithmatex">\(\\dot{\\theta}\)</span></p>
+<p>"""</p>
+<p><img alt="alt text" src="../image-9.png"/></p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Constants
+g = 9.81
+L = 1.0
+
+# Random but fixed parameters for nicer plots
+np.random.seed(42)
+b_damped = np.random.uniform(0.1, 1.0)          # damping coefficient
+A_forced = np.random.uniform(0.5, 2.0)          # forcing amplitude
+omega_forcing = np.random.uniform(1.0, 3.0)     # forcing frequency
+
+# Time span
+t_span = (0, 30)
+t_eval = np.linspace(t_span[0], t_span[1], 3000)
+
+def pendulum_ode(t, y, b, A, omega):
+    theta, omega_theta = y
+    dtheta_dt = omega_theta
+    domega_dt = - (g/L) * np.sin(theta) - b * omega_theta + A * np.cos(omega * t)
+    return [dtheta_dt, domega_dt]
+
+theta0 = 0.5
+omega0 = 0.0
+
+scenarios = {
+    "Pure pendulum (b=0, A=0)": (0.0, 0.0, 0),
+    f"Damped pendulum (b={b_damped:.2f}, A=0)": (b_damped, 0.0, 0),
+    f"Forced pendulum (b=0, A={A_forced:.2f}, ω={omega_forcing:.2f})": (0.0, A_forced, omega_forcing),
+}
+
+fig, axs = plt.subplots(len(scenarios), 2, figsize=(12, 9))
+fig.suptitle("Pendulum Dynamics with Random Parameters")
+
+for i, (title, (b, A, omega)) in enumerate(scenarios.items()):
+    sol = solve_ivp(pendulum_ode, t_span, [theta0, omega0], args=(b, A, omega), t_eval=t_eval, rtol=1e-8)
+
+    theta = sol.y[0]
+    omega_theta = sol.y[1]
+    t = sol.t
+
+    axs[i, 0].plot(t, theta)
+    axs[i, 0].set_title(f"{title} - Angle vs Time")
+    axs[i, 0].set_xlabel("Time (s)")
+    axs[i, 0].set_ylabel("Angle (rad)")
+    axs[i, 0].grid(True)
+
+    axs[i, 1].plot(theta, omega_theta)
+    axs[i, 1].set_title(f"{title} - Phase Diagram")
+    axs[i, 1].set_xlabel("Angle (rad)")
+    axs[i, 1].set_ylabel("Angular velocity (rad/s)")
+    axs[i, 1].grid(True)
+
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.show()
+
+</code></pre>
 <h1 id="6-discussion-and-evaluation">6. Discussion and Evaluation</h1>
 <h2 id="61-summary-of-findings">6.1 Summary of Findings</h2>
 <p>Through both theoretical analysis and computational simulations, the forced damped pendulum system has been shown to exhibit a wide variety of dynamical behaviors, ranging from simple periodic oscillations to chaotic motion. Key observations include:</p>
