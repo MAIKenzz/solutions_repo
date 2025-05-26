@@ -630,6 +630,104 @@ These regimes can be identified using:
 
 [link](https://colab.research.google.com/drive/1_LjPBADRivat7K0eXJuBNW1gO2pkeqyJ?usp=sharing)
 
+
+### Pendulum Simulation Summary:
+
+The pendulum is modeled by the nonlinear ODE:
+
+$$
+\ddot{\theta} + b \dot{\theta} + \frac{g}{L} \sin(\theta) = A \cos(\omega t)
+$$
+
+where:
+- $\\theta$ = angle (rad)
+- $\\dot{\\theta}$ = angular velocity (rad/s)
+- $b$ = damping coefficient
+- $g = 9.81\\, m/s^2$ (gravity)
+- $L = 1.0\\, m$ (pendulum length)
+- $A$ = forcing amplitude
+- $\\omega$ = forcing frequency
+
+Scenarios simulated:
+1. Pure pendulum: $b=0$, $A=0$
+2. Damped pendulum: $b \\approx 0.37$, $A=0$
+3. Forced pendulum: $b=0$, $A \\approx 1.75$, $\\omega \\approx 2.75$
+
+Initial conditions:
+- $\\theta(0) = 0.5$ rad
+- $\\dot{\\theta}(0) = 0$
+
+Time span: 0 to 30 seconds.
+
+Outputs:
+- Plot of $\\theta(t)$ vs time
+- Phase diagram: $\\theta$ vs $\\dot{\\theta}$
+
+"""
+
+![alt text](image-9.png)
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Constants
+g = 9.81
+L = 1.0
+
+# Random but fixed parameters for nicer plots
+np.random.seed(42)
+b_damped = np.random.uniform(0.1, 1.0)          # damping coefficient
+A_forced = np.random.uniform(0.5, 2.0)          # forcing amplitude
+omega_forcing = np.random.uniform(1.0, 3.0)     # forcing frequency
+
+# Time span
+t_span = (0, 30)
+t_eval = np.linspace(t_span[0], t_span[1], 3000)
+
+def pendulum_ode(t, y, b, A, omega):
+    theta, omega_theta = y
+    dtheta_dt = omega_theta
+    domega_dt = - (g/L) * np.sin(theta) - b * omega_theta + A * np.cos(omega * t)
+    return [dtheta_dt, domega_dt]
+
+theta0 = 0.5
+omega0 = 0.0
+
+scenarios = {
+    "Pure pendulum (b=0, A=0)": (0.0, 0.0, 0),
+    f"Damped pendulum (b={b_damped:.2f}, A=0)": (b_damped, 0.0, 0),
+    f"Forced pendulum (b=0, A={A_forced:.2f}, ω={omega_forcing:.2f})": (0.0, A_forced, omega_forcing),
+}
+
+fig, axs = plt.subplots(len(scenarios), 2, figsize=(12, 9))
+fig.suptitle("Pendulum Dynamics with Random Parameters")
+
+for i, (title, (b, A, omega)) in enumerate(scenarios.items()):
+    sol = solve_ivp(pendulum_ode, t_span, [theta0, omega0], args=(b, A, omega), t_eval=t_eval, rtol=1e-8)
+    
+    theta = sol.y[0]
+    omega_theta = sol.y[1]
+    t = sol.t
+    
+    axs[i, 0].plot(t, theta)
+    axs[i, 0].set_title(f"{title} - Angle vs Time")
+    axs[i, 0].set_xlabel("Time (s)")
+    axs[i, 0].set_ylabel("Angle (rad)")
+    axs[i, 0].grid(True)
+    
+    axs[i, 1].plot(theta, omega_theta)
+    axs[i, 1].set_title(f"{title} - Phase Diagram")
+    axs[i, 1].set_xlabel("Angle (rad)")
+    axs[i, 1].set_ylabel("Angular velocity (rad/s)")
+    axs[i, 1].grid(True)
+
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.show()
+
+```
+
 # 6. Discussion and Evaluation
 
 ## 6.1 Summary of Findings
