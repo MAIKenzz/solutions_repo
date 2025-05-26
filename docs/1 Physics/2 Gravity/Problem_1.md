@@ -232,6 +232,70 @@ Its continued relevance shows the power of mathematics and observation working h
 
 
 # 3. Real-World Applications 🌍🪐
+# 🌌 Kepler's Law – Mass of Earth and Sun
+
+We use **Kepler’s Third Law** for circular orbits:
+
+$$
+M = \frac{4\pi^2 r^3}{G T^2}
+$$
+
+Where:
+
+- $M$ = mass of the central body (Earth or Sun)  
+- $r$ = orbital radius (in meters)  
+- $T$ = orbital period (in seconds)  
+- $G = 6.67430 \times 10^{-11} \, \text{m}^3 \text{kg}^{-1} \text{s}^{-2}$ (gravitational constant)
+
+---
+
+## 🌍 Mass of the Earth (using the Moon’s orbit)
+
+Given:
+
+- $r = 3.844 \times 10^8 \, \text{m}$  
+- $T = 27.32 \, \text{days} = 27.32 \times 24 \times 3600 = 2.3606 \times 10^6 \, \text{s}$
+
+Now plug into the equation:
+
+$$
+M = \frac{4 \pi^2 (3.844 \times 10^8)^3}{6.67430 \times 10^{-11} \cdot (2.3606 \times 10^6)^2}
+$$
+
+**Result:**
+
+$$
+M \approx 5.97 \times 10^{24} \, \text{kg}
+$$
+
+✅ **Mass of the Earth ≈ $5.97 \times 10^{24} \, \text{kg}$**
+
+---
+
+## ☀️ Mass of the Sun (using the Earth’s orbit)
+
+Given:
+
+- $r = 1.496 \times 10^{11} \, \text{m}$  
+- $T = 365.25 \, \text{days} = 365.25 \times 24 \times 3600 = 3.156 \times 10^7 \, \text{s}$
+
+Then:
+
+$$
+M = \frac{4 \pi^2 (1.496 \times 10^{11})^3}{6.67430 \times 10^{-11} \cdot (3.156 \times 10^7)^2}
+$$
+
+**Result:**
+
+$$
+M \approx 1.99 \times 10^{30} \, \text{kg}
+$$
+
+✅ **Mass of the Sun ≈ $1.99 \times 10^{30} \, \text{kg}$**
+
+---
+
+These values are consistent with real astronomical measurements.
 
 ## 🌕 The Moon’s Orbit Around Earth
 
