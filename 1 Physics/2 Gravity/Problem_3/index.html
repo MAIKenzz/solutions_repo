@@ -538,6 +538,76 @@ ax.legend(loc='upper right')
 plt.tight_layout()
 plt.show()
 </code></pre>
+<p><img alt="alt text" src="../image-8.png"/></p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.67430e-11         # Gravitational constant (m^3 kg^-1 s^-2)
+M = 5.972e24            # Mass of Earth (kg)
+R_earth = 6371e3        # Radius of Earth (m)
+altitude = 800e3        # Altitude of satellite (m)
+
+# Initial position
+r0 = R_earth + altitude
+x0 = r0
+y0 = 0
+
+# Time settings
+dt = 1                 # Time step (s)
+t_max = 10000          # Total simulation time (s)
+steps = int(t_max / dt)
+
+# Initial velocity values (in m/s)
+velocities = np.arange(5e3, 13.5e3, 0.5e3)
+
+# Prepare figure
+plt.figure(figsize=(8, 8))
+colors = plt.cm.tab20(np.linspace(0, 1, len(velocities)))
+
+# Run simulation for each velocity
+for idx, v0 in enumerate(velocities):
+    # Initial conditions
+    x, y = x0, y0
+    vx, vy = 0, v0
+    x_vals, y_vals = [x], [y]
+
+    for _ in range(steps):
+        r = np.sqrt(x**2 + y**2)
+        ax = -G * M * x / r**3
+        ay = -G * M * y / r**3
+
+        vx += ax * dt
+        vy += ay * dt
+        x += vx * dt
+        y += vy * dt
+
+        x_vals.append(x)
+        y_vals.append(y)
+
+        # Stop if it crashes into Earth
+        if np.sqrt(x**2 + y**2) &lt; R_earth:
+            break
+
+    # Plot trajectory
+    plt.plot(np.array(x_vals)/1e3, np.array(y_vals)/1e3, color=colors[idx], label=f"{v0/1e3:.1f} km/s", lw=1)
+
+# Plot Earth
+earth = plt.Circle((0, 0), R_earth/1e3, color='blue', label='Earth')
+plt.gca().add_patch(earth)
+
+# Plot settings
+plt.xlim(-2e4, 2e4)
+plt.ylim(-2e4, 2e4)
+plt.xlabel("X position (km)")
+plt.ylabel("Y position (km)")
+plt.title("Trajectories from 800 km altitude with various initial velocities")
+plt.grid(True)
+plt.gca().set_aspect('equal')
+plt.legend(fontsize=8, loc='best')
+plt.tight_layout()
+plt.show()
+</code></pre>
 <h2 id="real-world-applications">Real-World Applications</h2>
 <h3 id="relevance-to-space-missions-and-satellite-deployment">Relevance to Space Missions and Satellite Deployment</h3>
 <p>The study of payload trajectories is essential for various space missions, particularly those involving satellite deployment, payload release, or reentry. The trajectory analysis helps in determining:</p>
